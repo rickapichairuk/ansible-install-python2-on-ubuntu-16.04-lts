@@ -14,6 +14,28 @@ by ansible.
 
 # INSTRUCTIONS
 
+## Option 1 - Include into a playbook before anything else:
+
+```
+---
+- include: /Users/rick/projects/ansible-install-python2-on-ubuntu-16.04-lts/playbook.yml
+- name: "Basic setup of Ubuntu Server"
+  hosts: all
+  become: true
+  roles:
+    - name: "basic server setup"
+      role: ansible-basic-server-setup
+      additional_packages_to_install: []
+    - name: "setup firewall"
+      role: ansible-ufw
+      ufw_allowed_ports:
+        - "22"
+        - "80"
+        - "443"
+```
+
+## Option 2 - Wrapper Playbook
+
 Create a "wrapper" playbook that includes other playbooks. This can be as
 minimal as including the playbook provided by this project and your playbook.
 
